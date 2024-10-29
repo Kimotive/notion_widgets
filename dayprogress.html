@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        /*CSS RESETS*/
+
+body{
+    background-color: #fff;
+    line-height: 1.6;
+
+}
+
+h1 {
+    margin-top: 0;
+}
+
+
+/*CSS START*/
+
+.progress-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.progress-bar{
+    position: relative;
+    width: 100%;
+    height: 30px;
+    border-radius: 2px;
+    background-color: #192820;
+}
+
+.progress-per{
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: #caba9c;
+    transition: width 1.7s ease-in-out;
+}
+
+.progress-span{
+    font-family: "Montserrat", sans-serif;
+    margin-left: 5px;
+    color: #caba9c;
+}
+
+    </style>
+</head>
+<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<div class="container">
+  <div class="progress-item">
+    <div class="progress-bar">
+      <div class="progress-per" data-text="95"></div>
+    </div>
+    <p class="progress-span">Día</p>
+  </div>
+</div>
+
+<script>
+
+let pc,
+  per = 0;
+
+function checkTime() {
+  var today = new Date();
+  var t = [today.getHours(), today.getMinutes(), today.getSeconds()];
+  pc = Math.round(((t[0] * 60 * 60 + t[1] * 60 + t[2]) / (24 * 60 * 60)) * 1000) / 10;
+}
+
+function progressLoad() {
+  document.querySelector(".progress-per").style.width = `${per >= pc ? pc : per}%`;
+  document.querySelector(".progress-span").innerHTML = `Día:&nbsp${per >= pc ? pc : per}%`;
+  per++;
+}
+checkTime();
+setInterval(checkTime, 500);
+setInterval(progressLoad, 90);
+
+// END
+</script>
+
+</body>
+</html>
