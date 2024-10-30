@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        /*CSS RESETS*/
+
+h1 {
+    margin-top: 0;
+}
+
+
+/*CSS START*/
+
+.progress-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.progress-bar{
+    position: relative;
+    width: 100%;
+    max-width: 94%;
+    height: 30px;
+    border-radius: 2px;
+    background-color: #192820;
+}
+
+.progress-per{
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: #caba9c;
+    transition: width 1.7s ease-in-out;
+}
+
+.progress-span{
+    width: 170px;
+    font-family: "Montserrat", sans-serif;
+    margin-left: 5px;
+    color: #caba9c;
+}
+
+    </style>
+</head>
+<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<div class="container">
+  <div class="progress-item">
+    <div class="progress-bar">
+      <div class="progress-per" data-text="95"></div>
+    </div>
+    <p class="progress-span">Día</p>
+  </div>  
+</div>
+
+<script>
+
+let pc, pcm, pcw, pcy, per = 0;
+
+function checkTime() {
+  var today = new Date();
+  var t = [today.getHours(), today.getMinutes(), today.getSeconds()];
+  pc = Math.round(((t[0] * 60 * 60 + t[1] * 60 + t[2]) / (24 * 60 * 60)) * 1000) / 10;
+
+  
+}
+
+function checkTimeWeek() {
+  var now = new Date();
+  var day = now.getDay();
+  var wdays = "7";
+  pcw = Math.round(((day) / (wdays)) * 1000) / 10;
+}
+
+function checkTimeMonth() {
+  var now = new Date();
+  var day = now.getDate();
+  var mdays = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+  pcm = Math.round(((day) / (mdays)) * 1000) / 10;
+}
+
+function checkTimeYear() {
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff = now - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+
+  var actYear = now.getFullYear();
+  var inYear = new Date(actYear, 0, 1);
+  var nxYear = new Date(actYear +1, 0, 1);
+  var dayYear = (nxYear - inYear) / (1000 * 60 * 60 * 24);
+
+  pcy = Math.round(((day) / (dayYear)) * 1000) / 10;
+  console.log('Day of year: ' + day);
+}
+
+function progressLoad() {
+  document.querySelector(".progress-per").style.width = `${per >= pc ? pc : per}%`;
+  document.querySelector(".weekp").style.width = `${per >= pcw ? pcw : per}%`;
+  document.querySelector(".monthp").style.width = `${per >= pcm ? pcm : per}%`;
+  document.querySelector(".yearp").style.width = `${per >= pcy ? pcy : per}%`;
+  document.querySelector(".progress-span").innerHTML = `Día:&nbsp${per >= pc ? pc : per}%`;
+  document.querySelector(".weeks").innerHTML = `Semana:&nbsp${per >= pcw ? pcw : per}%`;
+  document.querySelector(".months").innerHTML = `Mes:&nbsp${per >= pcm ? pcm : per}%`;
+  document.querySelector(".years").innerHTML = `Año:&nbsp${per >= pcy ? pcy : per}%`;
+  per++;
+}
+checkTime();
+checkTimeWeek();
+checkTimeMonth();
+checkTimeYear();
+setInterval(checkTime, 500);
+setInterval(checkTimeWeek, 500);
+setInterval(checkTimeMonth, 500);
+setInterval(progressLoad, 90);
+
+
+// END
+</script>
+
+</body>
+</html>
