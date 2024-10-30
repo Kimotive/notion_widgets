@@ -16,21 +16,23 @@ h1 {
 
 /*CSS START*/
 
+/*body{
+  background-color: #191919;
+}*/
+
 h2{
   margin: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 1.5em;
-  color: #102820;
+  color: #caba9c;
 }
 
 .dayDate{
-  font-size: 3em;
   color: #caba9c;
 }
 
 .monthDate{
-  margin-top: -15px;
   color: #4c6444;
 }
 
@@ -46,15 +48,15 @@ h5{
   margin: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
-  font-size: 1em;
-  color: #102820;
+  font-size: 1.5em;
+  color: #caba9c;
 }
 
 h6{
   margin: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  font-size: 0.5em;
+  font-size: 0.75em;
   color: #4c6444;
 }
 
@@ -64,19 +66,17 @@ p{
 }
 
 .container{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-column: 3;
 }
 
 .section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 1 / 1;
-    width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
 }
 
 .progress-container{
@@ -85,7 +85,6 @@ p{
 
 .progress-bar{
   position: relative;
-  width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 8px;
   padding: 12px;
@@ -100,7 +99,6 @@ p{
 .progress-bar::after{
   content: "";
   position:absolute;
-    border-radius: 4px;
     width:88%; 
     height:88%;
     border-width: 50px;
@@ -140,12 +138,12 @@ p{
 
   <div class="section">
     <h2 class="dayDate">30</h2>
-    <p class="monthDate">October</p>
+    <h3 class="monthDate">October</h3>
   </div>
 
-  <div class="section progress-container">
+  <div class="section">
     <div class="progress-bar monthb">
-      <div class="progress-per monthp" data-text="95"><h5 class="tHour">04</h5> <h6 class="tMin">40</h6></div>
+      <div class="progress-per monthp" data-text="95"><h5 class="tHour">04</h5> <h3 class="tMin">40</h3></div>
     </div>
   </div>
 
@@ -175,6 +173,15 @@ function checkTime() {
   pcm = months[today.getMonth()];
   pch = today.getHours();
   pcmin = today.getMinutes();
+
+  if(pch <10){
+    pch = "0" + pch;
+  }
+
+  if(pcmin < 10){
+    pcmin = "0" + pcmin;
+  }
+
   pc = today.getDate();
   var t = [today.getHours(), today.getMinutes(), today.getSeconds()];
   pcp = Math.round(((t[0] * 60 * 60 + t[1] * 60 + t[2]) / (24 * 60 * 60)) * 1000) / 10;
