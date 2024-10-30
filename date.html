@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        /*CSS RESETS*/
+
+h1 {
+    margin-top: 0;
+}
+
+
+/*CSS START*/
+
+h2{
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 3em;
+  color: #102820;
+}
+
+.dayDate{
+  font-size: 7em;
+  color: #caba9c;
+}
+
+.monthDate{
+  margin-top: -15px;
+  color: #4c6444;
+}
+
+h3{
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
+h5{
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #102820;
+}
+
+h6{
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1em;
+  color: #4c6444;
+}
+
+p{
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+.progress-container{
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.progress-bar{
+  margin: auto;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: transparent;
+  overflow: hidden;
+    
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-bar::after{
+  content: "";
+  position:absolute;
+    border-radius: 4px;
+    width:75%; 
+    height:75%;
+    border-width: 50px;
+    border-style: solid;
+    border-image-slice: 1;
+    border-image-source: conic-gradient(#caba9c var(--progress, 0), #102820 0%);
+  
+}
+
+.progress-per{
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-span{
+    width: 170px;
+    font-family: "Montserrat", sans-serif;
+    margin-left: 5px;
+    color: #caba9c;
+}
+
+    </style>
+</head>
+<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<div class="container">
+
+  <div class="section">
+    <h2>TODAY</h2>
+    <h3>IS</h3>
+  </div>
+
+  <div class="section">
+    <h2 class="dayDate">30</h2>
+    <p class="monthDate">October</p>
+  </div>
+
+  <div class="section progress-container">
+    <div class="progress-bar monthb">
+      <div class="progress-per monthp" data-text="95"><h5 class="tHour">04</h5> <h6 class="tMin">40</h6></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+let pc, pcm, pcp, pch, pcmin, per = 0;
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]
+
+function checkTime() {
+  today = new Date();
+  pcm = months[today.getMonth()];
+  pch = today.getHours();
+  pcmin = today.getMinutes();
+  pc = today.getDate();
+  var t = [today.getHours(), today.getMinutes(), today.getSeconds()];
+  pcp = Math.round(((t[0] * 60 * 60 + t[1] * 60 + t[2]) / (24 * 60 * 60)) * 1000) / 10;
+}
+
+function progressLoad() {
+  document.querySelector(".dayDate").innerHTML = `${pc}`;
+  document.querySelector(".monthDate").innerHTML = `${pcm}`;
+  document.querySelector(".progress-bar").style.setProperty('--progress', pcp + "%");
+  document.querySelector(".tHour").innerHTML = `${pch}`;
+  document.querySelector(".tMin").innerHTML = `${pcmin}`;
+  per++;
+}
+checkTime();
+setInterval(checkTime, 500);
+setInterval(progressLoad, 90);
+
+
+// END
+</script>
+
+</body>
+</html>
